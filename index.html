@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Dusk</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+
+    :root {
+      --bg:        #0a0614;
+      --card:      #130d24;
+      --border:    #1e1535;
+      --accent:    #bf9bff;
+      --amber:     #ff8c42;
+      --white:     #f0eaf8;
+      --muted:     #7a6e8a;
+      --green:     #30d158;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    /* subtle grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* header */
+    header {
+      padding: 56px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--card);
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-name {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: lowercase;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 6vw, 48px);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* privacy status pill */
+    .status-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .pill-green {
+      background: rgba(48, 209, 88, 0.1);
+      border: 1px solid rgba(48, 209, 88, 0.2);
+      color: var(--green);
+    }
+
+    .pill-purple {
+      background: rgba(191, 155, 255, 0.1);
+      border: 1px solid rgba(191, 155, 255, 0.2);
+      color: var(--accent);
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* sections */
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    p {
+      color: #b8aec8;
+      font-size: 15px;
+      line-height: 1.85;
+      margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* tier cards */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 500px) {
+      .tier-grid { grid-template-columns: 1fr; }
+    }
+
+    .tier-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .tier-card.pro {
+      border-color: rgba(191, 155, 255, 0.25);
+      background: #160e2a;
+    }
+
+    .tier-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 10px;
+    }
+
+    .tier-card:not(.pro) .tier-label { color: var(--green); }
+    .tier-card.pro .tier-label { color: var(--accent); }
+
+    .tier-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .tier-items {
+      list-style: none;
+      font-size: 13px;
+      color: #8a7e9a;
+      line-height: 2;
+    }
+
+    .tier-items li::before {
+      content: '→ ';
+      opacity: 0.5;
+    }
+
+    /* highlight box */
+    .highlight {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--amber);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #c8b8d8;
+      line-height: 1.7;
+    }
+
+    .highlight strong {
+      color: var(--amber);
+      font-weight: 500;
+    }
+
+    /* contact */
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .contact-card a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    /* footer */
+    footer {
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="2" width="14" height="17" rx="2" fill="#1c1035" stroke="#bf9bff" stroke-width="0.8" opacity="0.6"/>
+          <line x1="6" y1="7" x2="14" y2="7" stroke="#bf9bff" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+          <line x1="6" y1="10" x2="14" y2="10" stroke="#bf9bff" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+          <line x1="6" y1="13" x2="10" y2="13" stroke="#bf9bff" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+          <line x1="6" y1="16" x2="14" y2="16" stroke="#ff8c42" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+          <circle cx="14" cy="16" r="2" fill="#ff8c42" opacity="0.9"/>
+        </svg>
+      </div>
+      <span class="logo-name">dusk</span>
+    </div>
+
+    <h1>Your journal is <em>yours.</em><br>Here's exactly what that means.</h1>
+    <p class="meta">Privacy Policy · Effective April 28, 2026 · Version 1.0</p>
+  </header>
+
+  <div class="status-bar">
+    <span class="pill pill-green">
+      <span class="pill-dot"></span>
+      Free plan: nothing leaves your device
+    </span>
+    <span class="pill pill-purple">
+      <span class="pill-dot"></span>
+      Pro insights: sent securely, deleted immediately
+    </span>
+  </div>
+
+  <section>
+    <h2>The short version</h2>
+    <p>Dusk is a private journaling app. On the free plan, your journal entries never leave your iPhone — AI reflection questions are generated entirely on-device using Apple Intelligence. On the Pro plan, when you choose to generate deep insights, your last 30 entries are sent securely to our AI partner, analysed, and immediately deleted. We do not store your entries, sell your data, or use your writing for any purpose other than the analysis you requested.</p>
+  </section>
+
+  <section>
+    <h2>What data we collect — by tier</h2>
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-label">Free plan</div>
+        <div class="tier-title">Nothing leaves your phone</div>
+        <ul class="tier-items">
+          <li>Entries stored locally only</li>
+          <li>AI runs on-device (Apple Intelligence)</li>
+          <li>No account required</li>
+          <li>No analytics collected</li>
+          <li>No crash reporting</li>
+        </ul>
+      </div>
+      <div class="tier-card pro">
+        <div class="tier-label">Pro plan</div>
+        <div class="tier-title">Insights use secure processing</div>
+        <ul class="tier-items">
+          <li>Last 30 entries sent on request</li>
+          <li>Processed by Anthropic API</li>
+          <li>Deleted immediately after</li>
+          <li>Never stored on our servers</li>
+          <li>Never used for AI training</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How Pro deep insights work</h2>
+    <p>When you tap "Generate deep insights," your last 30 journal entries are transmitted over an encrypted connection to Anthropic's API (the makers of Claude AI). The model reads your entries, identifies patterns, and returns an analysis. The entries are then immediately deleted from Anthropic's systems.</p>
+    <div class="highlight">
+      <strong>Before any data is sent</strong>, Dusk shows you a clear notice explaining what will happen. You must explicitly confirm. You can use Dusk — including the free AI reflections — without ever triggering this. It is always your choice.
+    </div>
+    <p>Anthropic does not store your entries or use them to train their models. You can review Anthropic's privacy policy at <a href="https://anthropic.com/privacy" style="color: var(--accent);">anthropic.com/privacy</a>.</p>
+  </section>
+
+  <section>
+    <h2>Your journal entries</h2>
+    <p>Your journal entries are stored using SwiftData on your iPhone. They are not backed up to our servers. They are not synced to any cloud service. If you delete the app, your entries are deleted with it. We recommend using iOS device backups if you want to preserve your data.</p>
+    <p>Entries are locked at midnight and become read-only. This is enforced locally on your device — we have no access to your entries at any time.</p>
+  </section>
+
+  <section>
+    <h2>Subscriptions and payments</h2>
+    <p>Dusk Pro is an auto-renewing subscription managed entirely by Apple through the App Store. We never see your payment details. Billing, receipts, and cancellations are all handled by Apple. To cancel your subscription, go to Settings → Apple ID → Subscriptions on your iPhone.</p>
+  </section>
+
+  <section>
+    <h2>Analytics and crash reporting</h2>
+    <p>Dusk does not use third-party analytics tools (no Firebase, no Mixpanel, no Amplitude). We do not track how you use the app, how often you open it, or what you write.</p>
+    <p>If the app crashes, Apple may collect anonymised crash logs through their standard crash reporting system, subject to your iPhone's privacy settings. We use this only to fix bugs — no personal data is included.</p>
+  </section>
+
+  <section>
+    <h2>Children's privacy</h2>
+    <p>Dusk is not directed at children under 13. We do not knowingly collect data from children. If you believe a child has provided personal information through the Pro insights feature, please contact us and we will address it immediately.</p>
+  </section>
+
+  <section>
+    <h2>Changes to this policy</h2>
+    <p>If we make material changes to how we handle your data, we will update this page and change the effective date above. We will also notify you within the app before any change takes effect. Continued use of Dusk after notification constitutes acceptance of the updated policy.</p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p>Questions, concerns, or requests about your privacy can be sent to:</p>
+    <div class="contact-card">
+      <p style="margin:0;font-size:14px;color:#c8b8d8;">
+        <strong style="color:var(--white);display:block;margin-bottom:6px;">Dusk App Privacy</strong>
+        Email: <a href="mailto:duskapp.machinethinks@gmail.com">duskapp.machinethinks@gmail.com</a><br>
+        Website: <a href="https://machinethinks.com/">machinethinks.com</a>
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <footer>
+    <span>© 2026 Dusk. All rights reserved.</span>
+    <span>Effective April 28, 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
