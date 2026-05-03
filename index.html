@@ -3,412 +3,655 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Dusk</title>
+  <title>Dusk Journal — Your evening reflection, powered by on-device AI</title>
+  <meta name="description" content="A private AI journaling app that asks you one thoughtful question each evening. Everything runs on-device. No account, no cloud, no tracking.">
+  <meta property="og:title" content="Dusk Journal">
+  <meta property="og:description" content="Your evening reflection, powered by on-device AI.">
+  <meta property="og:type" content="website">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
-
-    :root {
-      --bg:        #0a0614;
-      --card:      #130d24;
-      --border:    #1e1535;
-      --accent:    #bf9bff;
-      --amber:     #ff8c42;
-      --white:     #f0eaf8;
-      --muted:     #7a6e8a;
-      --green:     #30d158;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #bf9bff;
+      --purple-dim: rgba(191,155,255,0.15);
+      --bg: #0a0a0f;
+      --surface: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08);
+      --text: #f0eef8;
+      --muted: rgba(240,238,248,0.5);
+      --green: #4ade80;
+    }
 
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
       font-weight: 300;
-      line-height: 1.8;
-      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* subtle grain overlay */
-    body::before {
-      content: '';
+    /* NAV */
+    nav {
       position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .wrap {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 24px 80px;
-    }
-
-    /* header */
-    header {
-      padding: 56px 0 48px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 48px;
-    }
-
-    .logo {
+      top: 0; left: 0; right: 0;
+      z-index: 100;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 28px;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(10,10,15,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: var(--card);
-      border-radius: 9px;
-      border: 1px solid var(--border);
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
       display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--purple);
+      color: #1a0d2e !important;
+      font-weight: 500 !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .logo-name {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      font-size: 18px;
-      color: var(--muted);
-      letter-spacing: 3px;
-      text-transform: lowercase;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(191,155,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--purple-dim);
+      border: 1px solid rgba(191,155,255,0.25);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--purple);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
     }
 
     h1 {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(32px, 6vw, 48px);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--white);
-      margin-bottom: 16px;
+      font-size: clamp(42px, 7vw, 80px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 760px;
+      margin-bottom: 24px;
     }
 
     h1 em {
       font-style: italic;
-      color: var(--accent);
+      color: var(--purple);
     }
 
-    .meta {
-      font-size: 13px;
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
       color: var(--muted);
-      letter-spacing: 0.5px;
+      max-width: 520px;
+      margin-bottom: 48px;
+      line-height: 1.7;
     }
 
-    /* privacy status pill */
-    .status-bar {
+    .cta-group {
       display: flex;
-      gap: 10px;
+      align-items: center;
+      gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 48px;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--purple);
+      color: #1a0d2e;
+      font-weight: 500;
+      font-size: 16px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .btn-secondary:hover { color: var(--text); }
+
+    /* SCREENSHOTS */
+    .screenshots {
+      padding: 80px 24px;
+      overflow: hidden;
+    }
+
+    .screenshots-track {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .phone-frame {
+      flex-shrink: 0;
+      width: 220px;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+
+    .phone-frame:hover { transform: translateY(-8px); }
+
+    .phone-frame.center-frame {
+      width: 240px;
+      box-shadow: 0 40px 100px rgba(191,155,255,0.15), 0 32px 80px rgba(0,0,0,0.6);
+    }
+
+    .phone-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    /* FEATURES */
+    .features {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 600px;
+      margin-bottom: 64px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 36px;
+      transition: background 0.2s;
+    }
+
+    .feature-card:first-child { border-radius: 24px 0 0 0; }
+    .feature-card:nth-child(2) { border-radius: 0 24px 0 0; }
+    .feature-card:nth-child(3) { border-radius: 0 0 0 24px; }
+    .feature-card:last-child { border-radius: 0 0 24px 0; }
+
+    .feature-card:hover { background: rgba(255,255,255,0.07); }
+
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--purple-dim);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* PRIVACY HIGHLIGHT */
+    .privacy-section {
+      padding: 100px 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .privacy-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .privacy-card::before {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(74,222,128,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .privacy-icon {
+      font-size: 48px;
+      margin-bottom: 24px;
+    }
+
+    .privacy-card h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      margin-bottom: 16px;
+    }
+
+    .privacy-card p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.8;
+    }
+
+    .privacy-pills {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 14px;
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.2);
       border-radius: 100px;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
-
-    .pill-green {
-      background: rgba(48, 209, 88, 0.1);
-      border: 1px solid rgba(48, 209, 88, 0.2);
+      padding: 8px 16px;
+      font-size: 13px;
       color: var(--green);
+      font-weight: 500;
     }
 
-    .pill-purple {
-      background: rgba(191, 155, 255, 0.1);
-      border: 1px solid rgba(191, 155, 255, 0.2);
-      color: var(--accent);
+    /* PRICING */
+    .pricing {
+      padding: 100px 24px;
+      max-width: 860px;
+      margin: 0 auto;
     }
 
-    .pill-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    /* sections */
-    section {
-      margin-bottom: 40px;
-    }
-
-    h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    h2::before {
-      content: '';
-      display: inline-block;
-      width: 3px;
-      height: 18px;
-      background: var(--accent);
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    p {
-      color: #b8aec8;
-      font-size: 15px;
-      line-height: 1.85;
-      margin-bottom: 14px;
-    }
-
-    p:last-child { margin-bottom: 0; }
-
-    /* tier cards */
-    .tier-grid {
+    .pricing-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin: 20px 0;
+      gap: 2px;
+      margin-top: 64px;
     }
 
-    @media (max-width: 500px) {
-      .tier-grid { grid-template-columns: 1fr; }
-    }
-
-    .tier-card {
-      background: var(--card);
+    .pricing-card {
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
+      padding: 40px;
     }
 
-    .tier-card.pro {
-      border-color: rgba(191, 155, 255, 0.25);
-      background: #160e2a;
+    .pricing-card:first-child { border-radius: 24px 0 0 24px; }
+    .pricing-card:last-child {
+      border-radius: 0 24px 24px 0;
+      border-color: rgba(191,155,255,0.25);
+      background: rgba(191,155,255,0.05);
+      position: relative;
+      overflow: hidden;
     }
 
-    .tier-label {
+    .pricing-card:last-child::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(191,155,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .pro-badge {
+      display: inline-block;
+      background: var(--purple);
+      color: #1a0d2e;
       font-size: 11px;
       font-weight: 500;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 10px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 20px;
     }
 
-    .tier-card:not(.pro) .tier-label { color: var(--green); }
-    .tier-card.pro .tier-label { color: var(--accent); }
-
-    .tier-title {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-
-    .tier-items {
-      list-style: none;
-      font-size: 13px;
-      color: #8a7e9a;
-      line-height: 2;
-    }
-
-    .tier-items li::before {
-      content: '→ ';
-      opacity: 0.5;
-    }
-
-    /* highlight box */
-    .highlight {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--amber);
-      border-radius: 12px;
-      padding: 18px 20px;
-      margin: 20px 0;
+    .pricing-tier {
       font-size: 14px;
-      color: #c8b8d8;
-      line-height: 1.7;
-    }
-
-    .highlight strong {
-      color: var(--amber);
+      color: var(--muted);
+      margin-bottom: 8px;
       font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
-    /* contact */
-    .contact-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      margin-top: 20px;
+    .pricing-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 4px;
     }
 
-    .contact-card a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 400;
-    }
-
-    .contact-card a:hover {
-      text-decoration: underline;
-    }
-
-    /* divider */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 40px 0;
-    }
-
-    /* footer */
-    footer {
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
+    .pricing-sub {
       font-size: 13px;
       color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .pricing-features {
+      list-style: none;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
       gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .pricing-features li span:first-child {
+      flex-shrink: 0;
+      color: var(--purple);
+      margin-top: 1px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 48px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 20px; }
+      .nav-links li:not(:last-child) { display: none; }
+
+      .screenshots-track {
+        gap: 12px;
+      }
+
+      .phone-frame { width: 140px; border-radius: 24px; }
+      .phone-frame.center-frame { width: 160px; }
+
+      .features-grid { grid-template-columns: 1fr; gap: 2px; }
+      .feature-card:first-child { border-radius: 24px 24px 0 0; }
+      .feature-card:nth-child(2) { border-radius: 0; }
+      .feature-card:nth-child(3) { border-radius: 0; }
+      .feature-card:last-child { border-radius: 0 0 24px 24px; }
+
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card:first-child { border-radius: 24px 24px 0 0; }
+      .pricing-card:last-child { border-radius: 0 0 24px 24px; }
+
+      .privacy-card { padding: 40px 24px; }
+
+      footer { flex-direction: column; align-items: flex-start; padding: 40px 24px; }
     }
   </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="logo">
-      <div class="logo-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="3" y="2" width="14" height="17" rx="2" fill="#1c1035" stroke="#bf9bff" stroke-width="0.8" opacity="0.6"/>
-          <line x1="6" y1="7" x2="14" y2="7" stroke="#bf9bff" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-          <line x1="6" y1="10" x2="14" y2="10" stroke="#bf9bff" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-          <line x1="6" y1="13" x2="10" y2="13" stroke="#bf9bff" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
-          <line x1="6" y1="16" x2="14" y2="16" stroke="#ff8c42" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
-          <circle cx="14" cy="16" r="2" fill="#ff8c42" opacity="0.9"/>
-        </svg>
-      </div>
-      <span class="logo-name">dusk</span>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Dusk</a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="https://apps.apple.com/app/dusk-journal/id6765990598" class="nav-cta">Download</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      On-device AI · iOS 26
     </div>
-
-    <h1>Your journal is <em>yours.</em><br>Here's exactly what that means.</h1>
-    <p class="meta">Privacy Policy · Effective April 28, 2026 · Version 1.0</p>
-  </header>
-
-  <div class="status-bar">
-    <span class="pill pill-green">
-      <span class="pill-dot"></span>
-      Free plan: nothing leaves your device
-    </span>
-    <span class="pill pill-purple">
-      <span class="pill-dot"></span>
-      Pro insights: sent securely, deleted immediately
-    </span>
-  </div>
-
-  <section>
-    <h2>The short version</h2>
-    <p>Dusk is a private journaling app. On the free plan, your journal entries never leave your iPhone — AI reflection questions are generated entirely on-device using Apple Intelligence. On the Pro plan, when you choose to generate deep insights, your last 30 entries are sent securely to our AI partner, analysed, and immediately deleted. We do not store your entries, sell your data, or use your writing for any purpose other than the analysis you requested.</p>
+    <h1>Your evening ritual,<br><em>guided by AI</em></h1>
+    <p class="hero-sub">
+      Dusk asks you one thoughtful question each night instead of leaving you with a blank page. Everything runs on-device — no account, no cloud, completely private.
+    </p>
+    <div class="cta-group">
+      <a href="https://apps.apple.com/app/dusk-journal/id6765990598" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download on App Store
+      </a>
+      <a href="#features" class="btn-secondary">
+        Learn more
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
   </section>
 
-  <section>
-    <h2>What data we collect — by tier</h2>
-    <div class="tier-grid">
-      <div class="tier-card">
-        <div class="tier-label">Free plan</div>
-        <div class="tier-title">Nothing leaves your phone</div>
-        <ul class="tier-items">
-          <li>Entries stored locally only</li>
-          <li>AI runs on-device (Apple Intelligence)</li>
-          <li>No account required</li>
-          <li>No analytics collected</li>
-          <li>No crash reporting</li>
+  <!-- SCREENSHOTS -->
+  <section class="screenshots">
+    <div class="screenshots-track">
+      <div class="phone-frame">
+        <img src="screenshotsupadted/dusk_screenshots_1284x2778/dusk_1-Tonight_1284x2778.png" alt="Dusk home screen" loading="lazy">
+      </div>
+      <div class="phone-frame center-frame">
+        <img src="screenshotsupadted/dusk_screenshots_1284x2778/dusk_2-Write-Reflection_1284x2778.png" alt="Writing with AI reflection" loading="lazy">
+      </div>
+      <div class="phone-frame">
+        <img src="screenshotsupadted/dusk_screenshots_1284x2778/dusk_5-Insights_1284x2778.png" alt="Insights view" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <p class="section-label">Why Dusk</p>
+    <h2 class="section-title">Not a note-taker.<br>A thinking partner.</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">✦</div>
+        <h3>AI asks the questions</h3>
+        <p>After you write, on-device AI generates one thoughtful follow-up question. Not advice — curiosity. It's the nudge that turns a dump into a reflection.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Completely private</h3>
+        <p>All AI runs on your device via Apple Foundation Models. Your journal never touches a server. No account required to write a single word.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>Patterns over time</h3>
+        <p>Pro users unlock deep AI insights across all their entries — mood trends, recurring themes, and observations you wouldn't notice yourself.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h3>Built for evenings</h3>
+        <p>Two-minute UX. Dark by design. A single daily ritual that replaces ten minutes of scrolling with ten minutes that actually matter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="privacy-section">
+    <div class="privacy-card">
+      <div class="privacy-icon">🛡️</div>
+      <h2>Your thoughts stay<br>on your phone</h2>
+      <p>Dusk uses Apple's on-device Foundation Models for all real-time AI. No servers see your words. No data is collected. No account means nothing to breach.</p>
+      <div class="privacy-pills">
+        <span class="pill">✓ On-device AI</span>
+        <span class="pill">✓ No account required</span>
+        <span class="pill">✓ No cloud sync</span>
+        <span class="pill">✓ No ads, ever</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title">Simple, honest pricing.</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <p class="pricing-tier">Free</p>
+        <p class="pricing-price">$0</p>
+        <p class="pricing-sub">Forever</p>
+        <ul class="pricing-features">
+          <li><span>✓</span><span>Unlimited writing</span></li>
+          <li><span>✓</span><span>3 AI reflections per week</span></li>
+          <li><span>✓</span><span>Mood tracking</span></li>
+          <li><span>✓</span><span>Streak counter</span></li>
+          <li><span>✓</span><span>No account required</span></li>
         </ul>
       </div>
-      <div class="tier-card pro">
-        <div class="tier-label">Pro plan</div>
-        <div class="tier-title">Insights use secure processing</div>
-        <ul class="tier-items">
-          <li>Last 30 entries sent on request</li>
-          <li>Processed by Anthropic API</li>
-          <li>Deleted immediately after</li>
-          <li>Never stored on our servers</li>
-          <li>Never used for AI training</li>
+      <div class="pricing-card">
+        <span class="pro-badge">Pro</span>
+        <p class="pricing-tier">Pro</p>
+        <p class="pricing-price">$2.99</p>
+        <p class="pricing-sub">per month · 7-day free trial</p>
+        <ul class="pricing-features">
+          <li><span>✓</span><span>Unlimited AI reflections</span></li>
+          <li><span>✓</span><span>Deep AI insights (cloud)</span></li>
+          <li><span>✓</span><span>Pattern analysis across entries</span></li>
+          <li><span>✓</span><span>PDF export</span></li>
+          <li><span>✓</span><span>On-demand insight refresh</span></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section>
-    <h2>How Pro deep insights work</h2>
-    <p>When you tap "Generate deep insights," your last 30 journal entries are transmitted over an encrypted connection to Anthropic's API (the makers of Claude AI). The model reads your entries, identifies patterns, and returns an analysis. The entries are then immediately deleted from Anthropic's systems.</p>
-    <div class="highlight">
-      <strong>Before any data is sent</strong>, Dusk shows you a clear notice explaining what will happen. You must explicitly confirm. You can use Dusk — including the free AI reflections — without ever triggering this. It is always your choice.
-    </div>
-    <p>Anthropic does not store your entries or use them to train their models. You can review Anthropic's privacy policy at <a href="https://anthropic.com/privacy" style="color: var(--accent);">anthropic.com/privacy</a>.</p>
-  </section>
-
-  <section>
-    <h2>Your journal entries</h2>
-    <p>Your journal entries are stored using SwiftData on your iPhone. They are not backed up to our servers. They are not synced to any cloud service. If you delete the app, your entries are deleted with it. We recommend using iOS device backups if you want to preserve your data.</p>
-    <p>Entries are locked at midnight and become read-only. This is enforced locally on your device — we have no access to your entries at any time.</p>
-  </section>
-
-  <section>
-    <h2>Subscriptions and payments</h2>
-    <p>Dusk Pro is an auto-renewing subscription managed entirely by Apple through the App Store. We never see your payment details. Billing, receipts, and cancellations are all handled by Apple. To cancel your subscription, go to Settings → Apple ID → Subscriptions on your iPhone.</p>
-  </section>
-
-  <section>
-    <h2>Analytics and crash reporting</h2>
-    <p>Dusk does not use third-party analytics tools (no Firebase, no Mixpanel, no Amplitude). We do not track how you use the app, how often you open it, or what you write.</p>
-    <p>If the app crashes, Apple may collect anonymised crash logs through their standard crash reporting system, subject to your iPhone's privacy settings. We use this only to fix bugs — no personal data is included.</p>
-  </section>
-
-  <section>
-    <h2>Children's privacy</h2>
-    <p>Dusk is not directed at children under 13. We do not knowingly collect data from children. If you believe a child has provided personal information through the Pro insights feature, please contact us and we will address it immediately.</p>
-  </section>
-
-  <section>
-    <h2>Changes to this policy</h2>
-    <p>If we make material changes to how we handle your data, we will update this page and change the effective date above. We will also notify you within the app before any change takes effect. Continued use of Dusk after notification constitutes acceptance of the updated policy.</p>
-  </section>
-
-  <section>
-    <h2>Contact</h2>
-    <p>Questions, concerns, or requests about your privacy can be sent to:</p>
-    <div class="contact-card">
-      <p style="margin:0;font-size:14px;color:#c8b8d8;">
-        <strong style="color:var(--white);display:block;margin-bottom:6px;">Dusk App Privacy</strong>
-        Email: <a href="mailto:duskapp.machinethinks@gmail.com">duskapp.machinethinks@gmail.com</a><br>
-        Website: <a href="https://machinethinks.com/">machinethinks.com</a>
-      </p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
+  <!-- FOOTER -->
   <footer>
-    <span>© 2026 Dusk. All rights reserved.</span>
-    <span>Effective April 28, 2026</span>
+    <a href="#" class="footer-logo">Dusk Journal</a>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="mailto:duskapp.machinethinks@gmail.com">Contact</a></li>
+      <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Sri Adatrao</p>
   </footer>
 
-</div>
 </body>
 </html>
